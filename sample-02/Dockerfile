@@ -10,4 +10,6 @@ RUN npm install && npm cache clean --force
 
 COPY . .
 
+RUN apk add --update curl
+
 CMD [ "node", "./bin/www" ]
