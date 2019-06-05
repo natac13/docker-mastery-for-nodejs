@@ -11,12 +11,18 @@ COPY --chown=node:node . .
 
 USER node
 
-RUN npm install --production && npm cache clean --force
+RUN npm install --only=production && npm cache clean --force
+
+CMD [ "node", "./bin/www" ]
 
 FROM prod as dev
 ENV NODE_ENV=development
 
-RUN npm install --only=dev
+RUN npm install --only=development
+
+CMD [ "./node_modules/nodemon/bin/nodemon.js", "./bin/www", "-inspect=0.0.0.0:9229" ]
 
 FROM dev as test
 ENV NODE_ENV=development
+
+CMD [ "npm", "test" ]

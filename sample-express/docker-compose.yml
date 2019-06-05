@@ -1,12 +1,15 @@
-version: '2.4'
+version: "2.4"
 
 services:
   express:
+    image: sample-express
     build: .
+    init: true
     ports:
       - 3000:3000
     volumes:
       - .:/app
+      - /node/app/node_modules
     environment:
       - DEBUG=sample-express:*
-
+      - HOST=${HOST:-0.0.0.0}
